@@ -6,16 +6,16 @@ import './TodoList.css';
 
 const ToDoList = () => {
   const [todos, setTodos] = useState([
-    { task: 'Walk the Chicken', completed: false },
-    { task: 'Swim the Pig', completed: false }
+    { task: 'Walk the Chicken', completed: false, id: uuidv4() },
+    { task: 'Swim the Pig', completed: false, id: uuidv4() }
   ]);
 
   const handleAddTodo = task => {
-    setTodos([...todos, { task, completed: false }]);
+    setTodos([...todos, { task, completed: false, id: uuidv4() }]);
   };
 
-  const handleRemoveTodo = index => {
-    setTodos([...todos].filter((td, i) => i !== index));
+  const handleRemoveTodo = id => {
+    setTodos([...todos].filter(td => td.id !== id));
   };
 
   const handleEditTodo = (editedTodo, i) => {
@@ -36,11 +36,11 @@ const ToDoList = () => {
         To do List! <span>A simple react todo list app</span>
       </h1>
       <ul>
-        {todos.map(({ task, completed }, index) => (
+        {todos.map(({ task, completed, id }, index) => (
           <Todo
             task={task}
-            key={uuidv4()}
-            removeTodo={() => handleRemoveTodo(index)}
+            key={id}
+            removeTodo={() => handleRemoveTodo(id)}
             saveEdit={handleEditTodo}
             index={index}
             completed={completed}
